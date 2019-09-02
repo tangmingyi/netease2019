@@ -9,14 +9,14 @@ def core(value: list, isRalse: list, index: int, k: int) -> int:
 import numpy as np
 
 if __name__ == '__main__':
-    # n,k = map(int,input().strip().split(" "))
-    # value = [int(i) for i in input().strip().split(" ")]
-    # isRalse = [int(i)==1 for i in input().strip().split(" ")]
-    n, k = 10, 5
-    value = [int(i) for i in "6481 6127 4477 5436 7356 3137 1076 7182 8147 835".split(" ")]
-    isRalse = [int(i) == 1 for i in "1 0 1 0 1 1 0 0 0 1".strip().split(" ")]
-    rightSum = np.dot(np.array([int(i) for i in "6481 6127 4477 5436 7356 3137 1076 7182 8147 835".split(" ")]) , np.array(
-        [int(i) for i in "1 0 1 0 1 1 0 0 0 1".strip().split(" ")]).T)
+    n,k = map(int,input().strip().split(" "))
+    value = [int(i) for i in input().strip().split(" ")]
+    isRalse = [int(i)==1 for i in input().strip().split(" ")]
+    # n, k = 10, 5
+    # value = [int(i) for i in "6481 6127 4477 5436 7356 3137 1076 7182 8147 835".split(" ")]
+    # isRalse = [int(i) == 1 for i in "1 0 1 0 1 1 0 0 0 1".strip().split(" ")]
+    # rightSum = np.dot(np.array([int(i) for i in "6481 6127 4477 5436 7356 3137 1076 7182 8147 835".split(" ")]) , np.array(
+    #     [int(i) for i in "1 0 1 0 1 1 0 0 0 1".strip().split(" ")]).T)
     sum = 0
     maxNum = 0
     for i in range(n):
