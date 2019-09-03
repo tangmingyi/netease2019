@@ -5,71 +5,31 @@
 #include <vector>
 #include <tuple>
 #include <algorithm>
-void initBound(std::vector<int >& bound){
-    int sum = 0;
-    for(auto Iter=bound.begin();Iter!=bound.end();Iter++){
-        int temp;
-        std::cin>>temp;
-        sum += temp;
-        *Iter = sum;
+void initBound(std::vector<std::pair<int,int >>& bound){
+    for(int i=1;i<bound.size();i++){
+        std::cin>>bound[i].first;
+        bound[i].second = i;
+        bound[i].first += bound[i-1].first;
     }
 }
-void initResult(std::vector<std::tuple<int,int,int>>& results ){
-    for(int i=0;i<results.size();i++){
-        int quire;
-        std::cin>>quire;
-        std::get<0>(results[i])=i;
-        std::get<1>(results[i])=quire;
-        std::get<2>(results[i])=-1;
-    }
+
+bool comp(std::pair<int,int >a,std::pair<int,int >b){
+    return a.first < b.first;
 }
-bool cmp1(std::tuple<int,int,int>a,std::tuple<int,int,int>b){
-    return std::get<1>(a) < std::get<1>(b);
+int getResult(std::vector<std::pair<int,int > >& bounds,int quire){
+    return (*std::lower_bound(bounds.begin(),bounds.end(),std::make_pair(quire,0),comp)).second;
 }
-bool cmp0(std::tuple<int,int,int>a,std::tuple<int,int,int>b){
-    return std::get<0>(a) < std::get<0>(b);
-}
-void getResult(std::vector<int >& bounds,int& begin,std::tuple<int,int,int>& result){
-    int index = begin+((bounds.size()-begin)>>1);
-    int quire = std::get<1>(result);
-    while (true){
-        if(bounds[index]>= quire){
-            if(bounds[index-1]<quire){
-                std::get<2>(result)=index+1;
-                break;
-            } else{
-                index = begin + ((index-begin)>>1);
-            }
-        } else{
-            if(bounds[index+1]>=quire){
-                std::get<2>(result)=index+1+1;
-                break;
-            } else{
-                index = index + ((bounds.size()-index)>>1);
-            }
-        }
-    }
-    begin = index-1;
-}
-void printResult(const std::vector<std::tuple<int,int,int >>& results){
-    for(auto Iter=results.begin();Iter!=results.end();Iter++){
-        std::cout<<std::get<2>(*Iter)<< std::endl;
-    }
-}
+
 int main(){
     int n,m;
     std::cin>>n;
-    std::vector<int> bound(n);
+    std::vector<std::pair<int,int >> bound(n+1,{0,0});
     initBound(bound);
     std::cin>>m;
-    std::vector<std::tuple<int,int,int >> results(m);//tuple 分别是 index，qi,result
-    initResult(results);
-    std::sort(results.begin(),results.end(),cmp1);
-    int begin = 0;
-    for (auto Iter=results.begin();Iter!=results.end();Iter++){
-        getResult(bound,begin,*Iter);
+    for(int i=0;i<m;i++){
+        int quite;
+        std::cin>>quite;
+        std::cout<<getResult(bound,quite)<<std::endl;
     }
-    std::sort(results.begin(),results.end(),cmp0);
-    printResult(results);
     return 0;
 }
